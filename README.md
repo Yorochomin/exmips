@@ -47,3 +47,5 @@ $ bash build_uboot.sh
 $ ./exmips u-boot/firm_u-boot.bin
 ```
 
+Twice inputs of Ctrl+C enter "emulator monitor". Please enter "halt" command in the monitor to exit from the emulator.
+
