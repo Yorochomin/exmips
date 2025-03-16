@@ -1,0 +1,19 @@
+diff --git a/configs/nec_ar9344_aterm_defconfig b/configs/nec_ar9344_aterm_defconfig
+index 706d4b26f4..5254fe0642 100644
+--- a/configs/nec_ar9344_aterm_defconfig
++++ b/configs/nec_ar9344_aterm_defconfig
+@@ -1,7 +1,7 @@
+ CONFIG_MIPS=y
+ CONFIG_SYS_MALLOC_LEN=0x40000
+ CONFIG_HAS_CUSTOM_SYS_INIT_SP_ADDR=y
+-CONFIG_CUSTOM_SYS_INIT_SP_ADDR=0xbd007fff
++CONFIG_CUSTOM_SYS_INIT_SP_ADDR=0x80007fff
+ CONFIG_ENV_SIZE=0x1000
+ CONFIG_DEFAULT_DEVICE_TREE="nec,ar9344-aterm"
+ CONFIG_SYS_LOAD_ADDR=0x83000000
+@@ -59,3 +59,4 @@ CONFIG_CLK=y
+ CONFIG_DM_SERIAL=y
+ CONFIG_SYS_NS16550=y
+ # CONFIG_GZIP is not set
++CONFIG_SKIP_LOWLEVEL_INIT=y
+\ No newline at end of file
