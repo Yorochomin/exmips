@@ -1335,14 +1335,16 @@ int compile32(struct stMachineState *pM, uint8_t *imem, uintmx vaddr){
                                 // pM->reg.r[rt] = ( (pM->reg.r[rt] & (~utmp)) | ((pM->reg.r[rs] << shamt) & utmp) );
 
                                 gen_mov_imm32_to_reg     (mem, &used, REG_NUM_CX, ~utmp);
-                                gen_and_sidx8_base_reg   (mem, &used, rt*4, REG_NUM_SI, REG_NUM_CX);
+                                gen_mov_sidx8_base_to_reg(mem, &used, REG_NUM_DX, rt*4, REG_NUM_SI);
+                                gen_and_reg_reg          (mem, &used, REG_NUM_DX, REG_NUM_CX);
 
+                                gen_not_reg              (mem, &used, REG_NUM_CX);
                                 gen_mov_sidx8_base_to_reg(mem, &used, REG_NUM_AX, rs*4, REG_NUM_SI);
                                 gen_sll_reg_imm8         (mem, &used, REG_NUM_AX, shamt);
-                                gen_not_reg              (mem, &used, REG_NUM_CX);
-                                gen_and_reg_reg          (mem, &used, REG_NUM_AX,  REG_NUM_CX);
+                                gen_and_reg_reg          (mem, &used, REG_NUM_AX, REG_NUM_CX);
 
-                                gen_or_sidx8_base_reg    (mem, &used, rt*4, REG_NUM_SI, REG_NUM_AX);
+                                gen_or_reg_reg           (mem, &used, REG_NUM_AX, REG_NUM_DX);
+                                gen_mov_reg_to_sidx8_base(mem, &used, REG_NUM_AX, rt*4, REG_NUM_SI);
                             }
                         }
                         break;
