@@ -11,7 +11,7 @@ This emulator has runtime binary translation, i.e., translating a MIPS32R2 instr
 to increase execution speed. This functionarity works only in x64 processors.
 The runtime binary translation is enabled by default and can be disabled by options in src/config.h.
 
-Most of functionalities to run Linux including an Ethernet controller is implemented in this emulators.
+Most of functionalities to run Linux including an Ethernet controller is implemented in this emulator.
 However, the following features of the SoC are not included.
 - Audio interface
 - DRAM controller interface
@@ -29,23 +29,46 @@ by locking cache lines with cache instruction.
 
 ### Emulator
 
+Some parameters such as DRAM capacity are determined in compilation time.
+Skilled users could change the parameters defined in src/config.h before compilation.
+
 ```
 $ make 
 ```
 
 ### ROM image (consisting of U-Boot and OpenWRT)
 
+A flash ROM image is necessary to use the emulator.
+This section describes the build process of the bootloader U-Boot and a ROM image consisting of the U-Boot and an official OpenWrt image.
+
+The U-Boot for the emulator is obtained with modifying the U-Boot code for NEC Aterm WG600HP router.
+The low level initialization of hardware, such as initialization of a DRAM controller, is not necessary for the emulator and unsupported.
+A patch disables the initialization process.
+The build process and generation of the flash ROM image are automated with u-boot/build_uboot.sh as follows.
+Some developper tools, such as bison, flex, libssl-dev, and gcc-mips-linux-gnu, are necessary to build the U-Boot with the script.
+
 ```
 $ cd u-boot
 $ bash build_uboot.sh
 ```
-"firm_u-boot.bin" is the resultant ROM image.
+"firm_u-boot.bin" is the resultant flash ROM image.
 
 ## Usage
+
+The emulator works using a SPI flash ROM image. 
 
 ```
 $ ./exmips u-boot/firm_u-boot.bin
 ```
 
-Twice inputs of Ctrl+C enter "emulator monitor". Please enter "halt" command in the monitor to exit from the emulator.
+Twice inputs of Ctrl+C enter "emulator monitor". Please enter "halt" command in the monitor to halt the emulator.
 
+The emulator simulates 64Mbit (8MBytes) Spansion S25Fl164K SPI flash memory by default.
+It also support 2Gbit (256MBytes) Macronix MX66U2G45G SPI flash memory and the 2Gbit flash is selected when "-f 256" option is used.
+The emulator loads the flash ROM image before starting the emulation.
+The image file will not be modified by default even if the flash is modified in emulator.
+Option "-s" enables write-back of the ROM image into the image file when the simulator halts.
+
+The supprt of an ethernet controller uses TUN/TAP interface.
+If network connectivity is necessary, running the emulator in a container environment is recommended because the setting of the TUN/TAP interface is complicated.
+Dockerfile and scripts to invoke a container in Ubuntu and Windows WSL environments are available in docker folder.
