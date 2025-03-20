@@ -119,7 +119,9 @@ $ bash docker/docker_run.sh
 
 This emulator contains no switch and has only one ethernet interface.
 Some modifications of OpenWrt setting are necessary to use network. 
-Following commands enable the network intarface of the emulator.
+Following commands enable the network intarface of the emulator. 
+The last command, killall ntpd, is a optional to update system date.
+Wrong date leads to failure of ``opkg`` package command allowing us to install various software.
 ```
 uci del network.@switch_vlan[0]
 uci del network.@switch_vlan[0]
@@ -161,3 +163,8 @@ config rule
         option dest_port        80
         option target           ACCEPT
 ```
+
+The OpenWrt in the emulator will be seen as 172.17.0.2 (or 172.17.0.n (n>2)) depending on the number of running containers.
+It is possible to enter OpenWrt by ``ssh root@172.17.0.2`` with no password. Please use it in a safe network.
+The networking of Docker in Windows environment differs from that in Linux. Please use the other script.
+
