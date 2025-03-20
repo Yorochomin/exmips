@@ -90,6 +90,9 @@ It also support 2Gbit (256MBytes) Macronix MX66U2G45G SPI flash memory and the 2
 
 The kernel image contains a layout of a flash memory device as a device tree. 
 A modification of the device tree file and a recompile are necessary to use the whole of a 2Gbit flash memory device.
+A patch and a sample build script are placed in [openwrt folder](openwrt/ "openwrt"). 
+A prebuild sample flash-memory image file for 2Gb flash memory is in [this repository](https://github.com/nkito/exmips_images "Image files for MIPS32R2 emulator").
+Using the sample prebuilt image is an easy way.
 
 ```
 (Clone the sample flash files, copy a sample file to the working directory, and emulate with it)
@@ -98,7 +101,7 @@ $ git clone https://github.com/nkito/exmips_images.git
 $ cp exmips_images/20250321_firm_u-boot_squashfs_2Gb.bin firm_2Gb.bin
 $ ./exmips -s firm_2Gb.bin
 ```
-Note that the sample image is a clean image. It will took long time to format the flash memory before mounting the root file system in the first start-up.
+Note that the sample image is a clean image. It will take long time to format the flash memory before mounting the root file system in the first boot-up.
 
 ### Networking
 
