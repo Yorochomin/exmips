@@ -40,6 +40,8 @@ $ make
 
 A flash-memory image file is necessary to use the emulator.
 This section describes the build process of the bootloader U-Boot and a flash memory image consisting of the U-Boot and an official OpenWrt image.
+Some prebuild flash-memory image files are in [this repository](https://github.com/nkito/exmips_images "Image files for MIPS32R2 emulator").
+If customization is unnecessary, using a prebuilt image is an easy way.
 
 The U-Boot for the emulator is obtained with modifying [the U-Boot code for NEC Aterm WG600HP router](https://github.com/musashino-build/u-boot.git "U-Boot").
 The low level initialization of hardware, such as initialization of a DRAM controller, is not necessary for the emulator and unsupported.
