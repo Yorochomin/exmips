@@ -22,10 +22,11 @@ RUN echo "if [ ! -f /net_configured ]; then"                  >> /etc/bash.bashr
     echo "fi"                                                 >> /etc/bash.bashrc && \
     echo ""                                                   >> /etc/bash.bashrc
 RUN mkdir /src && echo PS1=\"\\h:\\w\\$ \"                    >> /etc/bash.bashrc
-RUN echo cp /src/exmips /                                     >> /etc/bash.bashrc
+RUN echo "cp /src/exmips /"                                   >> /etc/bash.bashrc
 RUN echo "if [ ! -f /firm_docker.bin ]; then"                 >> /etc/bash.bashrc && \
     echo "   cp /src/firm_docker.bin /"                       >> /etc/bash.bashrc && \
     echo "fi"                                                 >> /etc/bash.bashrc && \
     echo ""                                                   >> /etc/bash.bashrc
-RUN echo /exmips -tap tap0 -f 256 -s firm_docker.bin          >> /etc/bash.bashrc
+RUN echo "/exmips -tap tap0 -f 256 -s firm_docker.bin"        >> /etc/bash.bashrc && \
+    echo "cp /firm_docker.bin /src/"                          >> /etc/bash.bashrc
 ENTRYPOINT ["bash"]
