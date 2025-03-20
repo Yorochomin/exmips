@@ -74,7 +74,10 @@ The image file will not be modified by default even if the flash is modified in 
 The emulation with option ``-s``, as following, enables write-back of the flash-memory image into the image file when the simulator halts.
 
 ```
-$ ./exmips -s u-boot/firm_u-boot_squashfs.bin
+(Copy the original file to the working directory, and emulate with it)
+
+$ cp u-boot/firm_u-boot_squashfs.bin firm.bin
+$ ./exmips -s firm.bin
 ```
 
 ### With large flash memory
@@ -85,9 +88,74 @@ It also support 2Gbit (256MBytes) Macronix MX66U2G45G SPI flash memory and the 2
 The kernel image contains a layout of a flash memory device as a device tree. 
 A modification of the device tree file and a recompile are necessary to use the whole of a 2Gbit flash memory device.
 
+```
+(Clone the sample flash files, copy a sample file to the working directory, and emulate with it)
+
+$ git clone https://github.com/nkito/exmips_images.git
+$ cp exmips_images/20250321_firm_u-boot_squashfs_2Gb.bin firm_2Gb.bin
+$ ./exmips -s firm_2Gb.bin
+```
+Note that the sample image is a clean image. It will took long time to format the flash memory before mounting the root file system in the first start-up.
 
 ### Networking
 
 The supprt of an ethernet controller uses TUN/TAP interface.
 If network connectivity is necessary, running the emulator in a container environment is recommended because the setting of the TUN/TAP interface is complicated.
 Dockerfile and scripts to invoke a container in Ubuntu and Windows WSL environments are available in docker folder.
+
+```
+(Build a docker container)
+$ cd docker
+$ bash ./docker_build.sh
+$ cd ..
+
+(Clone the sample flash files, copy a sample file to the working directory, and emulate with it in a container)
+$ git clone https://github.com/nkito/exmips_images.git
+$ cp exmips_images/20250321_firm_u-boot_squashfs_2Gb.bin firm_docker.bin
+$ bash docker/docker_run.sh
+```
+
+This emulator contains no switch and has only one ethernet interface.
+Some modifications of OpenWrt setting are necessary to use network. 
+Following commands enable the network intarface of the emulator.
+```
+uci del network.@switch_vlan[0]
+uci del network.@switch_vlan[0]
+uci del network.@switch[0]
+uci del network.@device[0]
+uci del network.@device[0]
+uci del network.lan
+uci del network.wan
+uci del network.wan6
+uci set network.wan=interface
+uci set network.wan.device='eth0'
+uci set network.wan.proto='static'
+uci set network.wan.ipaddr='192.168.100.10'
+uci set network.wan.netmask='255.255.255.0'
+uci set network.wan.gateway='192.168.100.1'
+uci set network.wan.dns='8.8.8.8'
+uci commit network
+/etc/init.d/network reload 
+killall ntpd
+```
+
+The default setting of the firewall disables remote login and HTTP connections from the WAN interface.
+Therefore, connecting to the emulator from the host computer is not possible with the default setting.
+Following modifications, i.e., adding following lines to ``/etc/config/firewall``, enable connections of SSH and HTTP from host-side networks.
+After editing the file, ``/etc/init.d/firewall reload`` is necessary to load the modified file.
+
+```
+config rule
+        option name             Allow-SSH
+        option src              wan
+        option dest_port        22
+        option proto            tcp
+        option target           ACCEPT
+
+config rule
+        option name             Allow-HTTP
+        option src              wan
+        option proto            tcp
+        option dest_port        80
+        option target           ACCEPT
+```
