@@ -1,3 +1,5 @@
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/nkito/exmips/c-cpp.yml?label=ci:emu-build&logo=github&style=flat-square)](https://github.com/nkito/exmips/actions/workflows/c-cpp.yml)
+
 # MIPS Emulator
 
 ## Overview
