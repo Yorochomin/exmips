@@ -27,5 +27,5 @@ RUN echo "if [ ! -f /firm_docker.bin ]; then"                 >> /etc/bash.bashr
     echo "   cp /src/firm_docker.bin /"                       >> /etc/bash.bashrc && \
     echo "fi"                                                 >> /etc/bash.bashrc && \
     echo ""                                                   >> /etc/bash.bashrc
-RUN echo /exmips -tap tap0 -f 256 firm_docker.bin             >> /etc/bash.bashrc
+RUN echo /exmips -tap tap0 -f 256 -s firm_docker.bin          >> /etc/bash.bashrc
 ENTRYPOINT ["bash"]
