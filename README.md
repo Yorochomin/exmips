@@ -67,7 +67,8 @@ The emulator works using a flash-memory image.
 $ ./exmips u-boot/firm_u-boot_initramfs.bin
 ```
 
-Twice inputs of Ctrl+C enter "emulator monitor". Please enter "halt" command in the monitor to halt the emulator.
+The emulator halts with "reset" command in U-Boot or "reboot" command in Linux terminal.
+Twice inputs of Ctrl+C enter "emulator monitor". "halt" command in the monitor also halts the emulator.
 
 The emulator loads the flash-memory image before starting the emulation.
 The image file will not be modified by default even if the flash is modified in emulator.
@@ -102,6 +103,7 @@ Note that the sample image is a clean image. It will took long time to format th
 The supprt of an ethernet controller uses TUN/TAP interface.
 If network connectivity is necessary, running the emulator in a container environment is recommended because the setting of the TUN/TAP interface is complicated.
 Dockerfile and scripts to invoke a container in Ubuntu and Windows WSL environments are available in docker folder.
+The scripts expect ``firm_docker.bin`` as the flash-memory image file.
 
 ```
 (Build a docker container)
