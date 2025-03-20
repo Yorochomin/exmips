@@ -168,3 +168,5 @@ The OpenWrt in the emulator will be seen as 172.17.0.2 (or 172.17.0.n (n>2)) dep
 It is possible to enter OpenWrt by ``ssh root@172.17.0.2`` with no password. Please use it in a safe network.
 The networking of Docker in Windows environment differs from that in Linux. Please use the other script.
 
+<img src="pics/screen_networking.png" width="700px">
+
