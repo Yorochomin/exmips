@@ -5,7 +5,7 @@
 ## Overview
 
 This emulator emulates Atheros AR934x SoC including a processor core of MIPS32R2. The SoC has been used in home routers.
-It is capable to run [OpenWRT](https://openwrt.org/ "OpenWrt Wiki"), a well-known Linux distribution for home routers.
+It is capable to run [OpenWrt](https://openwrt.org/ "OpenWrt Wiki"), a well-known Linux distribution for home routers.
 
 <img src="pics/screen_login.png" width="500px">
 
