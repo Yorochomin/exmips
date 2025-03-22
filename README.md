@@ -120,6 +120,9 @@ $ cd ..
 $ git clone https://github.com/nkito/exmips_images.git
 $ cp exmips_images/20250321_firm_u-boot_squashfs_2Gb.bin firm_docker.bin
 $ bash docker/docker_run.sh
+
+(If WSL in windows environment is used, please use docker/docker_run_win.sh instead of docker/docker_run.sh)
+$ bash docker/docker_run_win.sh
 ```
 
 This emulator contains no switch and has only one ethernet interface.
@@ -170,8 +173,11 @@ config rule
 ```
 
 The OpenWrt in the emulator will be seen as 172.17.0.2 (or 172.17.0.n (n>2)) depending on the number of running containers.
-It is possible to enter OpenWrt by ``ssh root@172.17.0.2`` with no password. Please use it in a safe network.
-The networking of Docker in Windows environment differs from that in Linux. Please use the other script.
+It is possible to enter OpenWrt by ``ssh root@172.17.0.2`` with no password. Please use it in a safe network environment.
+
+The networking of Docker in Windows environment differs from that in Linux.
+The OpenWrt in the emulator will be seen as ``localhost`` (or 127.0.0.1).
+``localhost:8080`` and ``localhost:2222`` are forwarded to ports 80 and 22 of the OpenWrt in the emulator, respectively
 
 <img src="pics/screen_networking.png" width="700px">
 
