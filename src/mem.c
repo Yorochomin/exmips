@@ -558,13 +558,13 @@ static inline void storeMemory(struct stMachineState *pM, uintmx addr, int accwi
     }else if(addr >= SPI0_BASE_ADDRESS && addr <= SPI0_BASE_ADDRESS+SPI_ADDR_SIZE){
         // SPI
 
+        uint32_t alignData = wrDataAlign(accwidth, addr, data);
 #if USE_SPI_EMULATION
         /* 
          * Writing SPI register, SPI_CONTROL_ADDR, may change memory mapping.
          * Therefore, address caches should be cleared.
          */
-        if( addr >= SPI0_BASE_ADDRESS + SPI_CTRL_REG && addr < SPI0_BASE_ADDRESS + SPI_CTRL_REG + 4 &&
-            ( (pM->mem.ioSPI.control ^ data) & (1<<SPI_CTRL_BIT_REMAP_DISABLE) ) ){
+        if( alignAddr == SPI0_BASE_ADDRESS + SPI_CTRL_REG && ( (pM->mem.ioSPI.control ^ alignData) & (1<<SPI_CTRL_BIT_REMAP_DISABLE) ) ){
 #if USE_RUNTIME_COMPILATION
             rc_clear();
 #endif
@@ -573,7 +573,7 @@ static inline void storeMemory(struct stMachineState *pM, uintmx addr, int accwi
             clearAddrCache(&pM->reg.dw_cache);
         }
 
-        writeSPIReg(pM, &(pM->mem.ioSPI), alignAddr, wrDataAlign(accwidth, addr, data) );
+        writeSPIReg(pM, &(pM->mem.ioSPI), alignAddr, alignData );
         return;
 #endif
 
