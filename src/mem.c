@@ -211,7 +211,7 @@ static uintmx getPhyAddr(struct  stMachineState *pM, uintmx addr, int isWrite, i
               Memory image
               [1fc0_0000 - 1fff_ffff] -> [0x1f00_0000 - 0x1f3f_ffff]
             */
-            return (addr & 0xff3fffff);   // memory image
+            return (addr & 0xff3fffff);
         }else{
             return addr;
         }
@@ -221,7 +221,7 @@ static uintmx getPhyAddr(struct  stMachineState *pM, uintmx addr, int isWrite, i
             Memory image
             [1fc0_0000 - 1fff_ffff] -> [0x1f00_0000 - 0x1f3f_ffff]
             */
-            return (addr & 0xff3fffff);   // memory image
+            return (addr & 0xff3fffff);
         }else{
             return addr;
         }
@@ -241,7 +241,7 @@ static uintmx getPhyAddr(struct  stMachineState *pM, uintmx addr, int isWrite, i
               Memory image
               [1fc0_0000 - 1fff_ffff] -> [0x1f00_0000 - 0x1f3f_ffff]
             */
-            return (addr & 0xff3fffff);   // memory image
+            return (addr & 0xff3fffff);
         }else{
             return addr;
         }
@@ -251,7 +251,7 @@ static uintmx getPhyAddr(struct  stMachineState *pM, uintmx addr, int isWrite, i
             Memory image
             [1fc0_0000 - 1fff_ffff] -> [0x1f00_0000 - 0x1f3f_ffff]
             */
-            return (addr & 0xff3fffff);   // memory image
+            return (addr & 0xff3fffff);
         }else{
             return addr;
         }
@@ -614,8 +614,6 @@ static inline void storeMemory(struct stMachineState *pM, uintmx addr, int accwi
 
 //        printf("write GMAC1 register 0x%x val 0x%x\n", addr, data);
     }
-
-    //printf("[memory write: 0x%x @ 0x%x]\n", data, addr);
 }
 
 void storeByte(struct stMachineState *pM, uintmx addr, uint8_t  data, int *perror){

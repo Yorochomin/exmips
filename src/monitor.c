@@ -20,7 +20,7 @@
 #include <string.h>
 
 static void emuMonitor_help(void){
-    PRINTF(" d [addr] :  dump memory. \n");
+    PRINTF(" d [paddr]:  dump memory. \n");
     PRINTF(" perf     :  show performance values. \n");
     PRINTF(" reg      :  show register values. \n");
     PRINTF(" halt     :  halt the emulator and exit. \n");
@@ -139,7 +139,7 @@ static int emuMonitor_execCmd(struct stMachineState *pM, char *cmd){
 extern struct termios term_original_settings;
 
 /**
- * Emulator monitor for 16bit environment
+ * Emulator monitor
  *
  * Return value is 0 or a negative value.
  * 0 requests the return to the emulation.
