@@ -38,20 +38,18 @@ void storeC0Counter(struct stMachineState *pM, uintmx val){
 uintmx loadC0CounterPrecise(struct stMachineState *pM){
     uint64_t counter;
 
-//    pM->reg.c0_count_currenttime = getTimeInUSec(pM);
     counter  = pM->reg.c0_count_currenttime - pM->reg.c0_count_basetime;
     counter *= ((uint64_t) (FREQ_CPU/(CPU_FREQ_COUNT_RESOLUTION*1000*1000)));
-    counter += (pM->emu.nExecInsts - pM->reg.c0_count_ninst_in_ctime) * 2;
+    counter += (pM->emu.nExecInsts - pM->reg.c0_count_ninst_in_ctime) / CPU_FREQ_COUNT_RESOLUTION;
     return counter;
 }
 
 uintmx loadC0Counter(struct stMachineState *pM){
     uint64_t counter;
 
-//    pM->reg.c0_count_currenttime = getTimeInUSec(pM);
     counter  = pM->reg.c0_count_currenttime - pM->reg.c0_count_basetime;
     counter *= ((uint64_t) (FREQ_CPU/(CPU_FREQ_COUNT_RESOLUTION*1000*1000)));
-    counter += (pM->emu.nExecInsts - pM->reg.c0_count_ninst_in_ctime) * 2;
+    counter += (pM->emu.nExecInsts - pM->reg.c0_count_ninst_in_ctime) / CPU_FREQ_COUNT_RESOLUTION;
     return counter;
 }
 
