@@ -48,14 +48,6 @@ void timer_handler(int signum){
 struct termios termOrigSettings;
 //-----------------------------------------------------
 
-/*
-int getIntFlag(struct stMachineState *pM){
-    return intflag;
-}
-int getTimerFlag(struct stMachineState *pM){
-    return timerflag;
-}
-*/
 void resetTimerFlag(struct stMachineState *pM){
     timerflag = 0;
 }

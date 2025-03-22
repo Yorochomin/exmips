@@ -246,14 +246,6 @@
 #define gen_cmove_reg_reg(        mem, pused, rd, rs)      __gen_0f_op_reg_reg       (mem, pused, 0x44, rd, rs)
 #define gen_cmove_reg_sidx8_base(mem, pused, rd, idx, rb)  __gen_0f_op_reg_sidx8_base(mem, pused, 0x44, rd, idx, rb)
 
-/*
-#define gen_sub_8_rsp(mem, pused) \
-        do{ (mem)[*(pused)] = 0x48; (mem)[*(pused)+1] = 0x83; (mem)[*(pused)+2] = 0xec; (mem)[*(pused)+3] = 0x08; *(pused)+=4; }while(0)
-
-#define gen_add_8_rsp(mem, pused) \
-        do{ (mem)[*(pused)] = 0x48; (mem)[*(pused)+1] = 0x83; (mem)[*(pused)+2] = 0xc4; (mem)[*(pused)+3] = 0x08; *(pused)+=4; }while(0)
-*/
-
 #define gen_cwde(mem, pused) /* sign extension of AX -> EAX */ \
         do{ (mem)[*(pused)] = 0x98; *(pused)+=1; }while(0)
 

@@ -24,12 +24,6 @@ void requestUARTSendBreak(struct stMachineState *pM, struct stIO_UART *pUART){
 
 uint8_t readUARTReg(struct stMachineState *pM, struct stIO_UART *pUART, uint32_t addr){
 
-/*
-    if( (addr&IOADDR_UART_MASK) != UART_REG_RXBUF && (addr&IOADDR_UART_MASK) != UART_REG_LINESTAT ){
-        printf("UART R         0x%08x [PC:0x%08x INT:0x%x] \n", addr, REG_PC(pM), pUART->int_enable);
-    }
-*/
-
     switch( (addr&IOADDR_UART_MASK) ){
 
         case UART_REG_RXBUF:
@@ -113,12 +107,6 @@ uint8_t readUARTReg(struct stMachineState *pM, struct stIO_UART *pUART, uint32_t
 }
 
 void writeUARTReg  (struct stMachineState *pM, struct stIO_UART *pUART, uint32_t addr, uint8_t data){
-
-/*
-    if( (addr&IOADDR_UART_MASK) != UART_REG_TXBUF ){
-        printf("UART W 0x%02x to 0x%08x [PC:0x%08x INT:0x%x] \n",data, addr, REG_PC(pM), pUART->int_enable);
-    }
-*/
 
     switch( (addr&IOADDR_UART_MASK) ){
         
