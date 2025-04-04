@@ -980,7 +980,12 @@ int compile32(struct stMachineState *pM, uint8_t *imem, uintmx vaddr){
                         }
                         goto compile_finished;
 
-                    case 0x09: // jalr
+                    case 0x09: // jalr / jalr.hb
+                        if( shamt & 0x10 ){
+                            // jalr.hb instruction for clearing instruction and execution hazards
+                            // This instruction should be done with C code
+                            goto compile_finished;
+                        }
                         if( ((pointer+4)&0xfff) != 0 ){
                             uint32_t old_used = used;
 

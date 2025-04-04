@@ -82,7 +82,7 @@ static inline int execMIPS32eInst(struct stMachineState *pM, uintmx inst){
                             // 
                             // 1. cache or synci instructions to synchronize cache
                             // 2. sync instruction for synchronization
-                            // 3. jr.hb 
+                            // 3. jalr.hb / jr.hb / eret
                             //
                             // Thus, calling rc_clear at only one of the above steps is necessary.
                             rc_clear();
@@ -94,8 +94,15 @@ static inline int execMIPS32eInst(struct stMachineState *pM, uintmx inst){
                         if(DEBUG) EXI_LOG_PRINTF("jr %s(=0x%x)\n", regStr[rs], pM->reg.r[rs]);
                     }
                     break;
-                case 0x09: // jalr
-                    if(DEBUG) EXI_LOG_PRINTF("jalr %s, %s(=0x%x)\n", regStr[rd], regStr[rs], pM->reg.r[rs]);
+                case 0x09: // jalr / jalr.hb
+                    if( shamt & 0x10 ){
+                        if(DEBUG) EXI_LOG_PRINTF("jalr.hb %s, %s(=0x%x)\n", regStr[rd], regStr[rs], pM->reg.r[rs]);
+                        // hazard barrier
+                        // to make the new instructions effective after writting a new instruction stream
+                        rc_clear();
+                    }else{
+                        if(DEBUG) EXI_LOG_PRINTF("jalr %s, %s(=0x%x)\n", regStr[rd], regStr[rs], pM->reg.r[rs]);
+                    }
                     jumpaddr = pM->reg.r[rs];
                     pM->reg.r[rd] = pM->reg.pc + 8;
                     UPDATE_PC_NEXT_WITH_DELAYED_IMM(pM, jumpaddr);
@@ -1055,9 +1062,9 @@ static inline int execMIPS32eInst(struct stMachineState *pM, uintmx inst){
                         }
                         pM->reg.ll_sc = 0;
                         #if USE_RUNTIME_COMPILATION
-                            if( (C0_VAL(pM,C0_CAUSE) & C0_CAUSE_EXCCODE_MASK) == (EXCEPT_CODE_SYSCALL<<C0_CAUSE_BIT_EXCCODE) ){
-                                rc_check_and_run(pM);
-                            }
+                            // hazard barrier
+                            // to make the new instructions effective after writting a new instruction stream
+                            rc_clear();
                         #endif
                         // TODO: processing of SRSCTL etc
                     }else if( inst == 0x42000020 ){
