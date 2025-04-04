@@ -1061,11 +1061,10 @@ static inline int execMIPS32eInst(struct stMachineState *pM, uintmx inst){
                             C0_VAL(pM,C0_STATUS) &= ~(1<<C0_STATUS_BIT_EXL);
                         }
                         pM->reg.ll_sc = 0;
-                        #if USE_RUNTIME_COMPILATION
-                            // hazard barrier
-                            // to make the new instructions effective after writting a new instruction stream
-                            rc_clear();
-                        #endif
+                        // ERET is a hazard barrier instruction. 
+                        // However, it seems to be limited to hazards created by CP0 state changes.
+                        // This inplementation requests no treatment for changing CP0 values. I think.
+
                         // TODO: processing of SRSCTL etc
                     }else if( inst == 0x42000020 ){
                         if(DEBUG) EXI_LOG_PRINTF("wait\n");
