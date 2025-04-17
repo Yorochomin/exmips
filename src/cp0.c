@@ -110,6 +110,7 @@ void  storeCP0(struct stMachineState *pM, unsigned int reg, unsigned sel, uintmx
     }
 
     pM->reg.cp0[ C0_REG_IDX2(reg, sel) ] = val;
+    printf("a");
 }
 
 uintmx loadCP0(struct stMachineState *pM, unsigned int reg, unsigned sel){
